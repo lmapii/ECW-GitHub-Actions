@@ -1,0 +1,39 @@
+<svg viewBox="0 0 1380 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Build, Reserve, Wait, Configure HIL, Upload including explicit flash, Test, Collect, Release.">
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="#3accba"/></marker></defs>
+<rect width="1380" height="270" fill="#101010"/>
+<g font-family="ui-sans-serif, Segoe UI, Arial">
+<text x="25" y="36" font-size="20" font-weight="700" fill="white">ECW CI: prepare HIL, then upload and flash MCU firmware</text>
+<text x="25" y="60" font-size="13" fill="#8fa6a1">Configure HIL uses frontend CSV values and a three-minute readiness deadline. Upload contains both firmware API calls.</text>
+<rect x="25" y="110" width="130" height="60" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"/>
+<text x="90" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="white">Build</text>
+<text x="90" y="193" text-anchor="middle" font-size="10.5" fill="#8fa6a1">firmware artifact</text>
+<path d="M155 140H191" stroke="#3accba" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="195" y="110" width="130" height="60" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"/>
+<text x="260" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="white">Reserve</text>
+<text x="260" y="193" text-anchor="middle" font-size="10.5" fill="#8fa6a1">owned booking</text>
+<path d="M325 140H361" stroke="#3accba" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="365" y="110" width="130" height="60" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"/>
+<text x="430" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="white">Wait</text>
+<text x="430" y="193" text-anchor="middle" font-size="10.5" fill="#8fa6a1">status = active</text>
+<path d="M495 140H531" stroke="#3accba" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="535" y="110" width="130" height="60" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"/>
+<text x="600" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="white">Configure HIL</text>
+<text x="600" y="193" text-anchor="middle" font-size="10.5" fill="#8fa6a1">prepare → CSV</text>
+<path d="M665 140H701" stroke="#3accba" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="705" y="110" width="130" height="60" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"/>
+<text x="770" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="white">Upload</text>
+<text x="770" y="193" text-anchor="middle" font-size="10.5" fill="#8fa6a1">store → explicit flash</text>
+<path d="M835 140H871" stroke="#3accba" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="875" y="110" width="130" height="60" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"/>
+<text x="940" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="white">Test</text>
+<text x="940" y="193" text-anchor="middle" font-size="10.5" fill="#8fa6a1">user CI jobs</text>
+<path d="M1005 140H1041" stroke="#3accba" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1045" y="110" width="130" height="60" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"/>
+<text x="1110" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="white">Collect</text>
+<text x="1110" y="193" text-anchor="middle" font-size="10.5" fill="#8fa6a1">job artifacts *</text>
+<path d="M1175 140H1211" stroke="#3accba" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1215" y="110" width="130" height="60" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"/>
+<text x="1280" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="white">Release</text>
+<text x="1280" y="193" text-anchor="middle" font-size="10.5" fill="#8fa6a1">cancel booking *</text>
+<text x="25" y="235" font-size="11.5" fill="#8fa6a1">* HIL and upload failures stop Test; Release retains the existing booking cleanup. Blank HIL_SENSOR_NAME skips HIL configuration.</text>
+</g></svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="880" viewBox="0 0 1500 880" role="img" font-family="DejaVu Sans, sans-serif">
+<title>Single-workflow method — wait mode</title>
+<desc>Build, Reserve, Wait for an active booking, Configure HIL, Upload then explicitly flash firmware, Test, Collect and Release. Preparation success confirms HIL activation using the existing frontend API. Cleanup remains available after failures.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="#3accba"/></marker></defs>
+<rect width="1500" height="880" fill="#101010"/>
+<text x="48" y="52" fill="#f1f5f3" font-size="29" font-weight="700">Single-workflow method — wait mode</text>
+<text x="48" y="88" fill="#adc1ba" font-size="18">One GitHub Actions workflow; the runner stays occupied while the booking is pending.</text>
+<rect x="36" y="125" width="1428" height="390" rx="12" fill="#202020" stroke="#40554d" stroke-width="1.5"/>
+<text x="60" y="156" fill="#3accba" font-size="17" font-weight="700" text-anchor="start">ci-job-smoke.yml  /  one workflow run</text>
+<rect x="60" y="185" width="300" height="110" rx="12" fill="#173c34" stroke="#3accba" stroke-width="1.5"/>
+<text x="78" y="213" fill="#3accba" font-size="16" font-weight="700" text-anchor="start">1</text>
+<text x="210.0" y="220" fill="#f1f5f3" font-size="21" font-weight="700" text-anchor="middle">Build</text>
+<text x="210.0" y="250" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Run build.sh</text>
+<text x="210.0" y="273" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Save the firmware artifact</text>
+<path d="M360 240H412" fill="none" stroke="#3accba" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="420" y="185" width="300" height="110" rx="12" fill="#173c34" stroke="#3accba" stroke-width="1.5"/>
+<text x="438" y="213" fill="#3accba" font-size="16" font-weight="700" text-anchor="start">2</text>
+<text x="570.0" y="220" fill="#f1f5f3" font-size="21" font-weight="700" text-anchor="middle">Reserve</text>
+<text x="570.0" y="250" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Reuse or create</text>
+<text x="570.0" y="273" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">an owned booking</text>
+<path d="M720 240H772" fill="none" stroke="#3accba" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="780" y="185" width="300" height="110" rx="12" fill="#3c3220" stroke="#e6c279" stroke-width="1.5"/>
+<text x="798" y="213" fill="#3accba" font-size="16" font-weight="700" text-anchor="start">3</text>
+<text x="930.0" y="220" fill="#f1f5f3" font-size="21" font-weight="700" text-anchor="middle">Wait</text>
+<text x="930.0" y="250" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Poll until booking is active</text>
+<text x="930.0" y="273" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">A runner remains busy</text>
+<path d="M1080 240H1132" fill="none" stroke="#3accba" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="1140" y="185" width="300" height="110" rx="12" fill="#173c34" stroke="#3accba" stroke-width="1.5"/>
+<text x="1158" y="213" fill="#3accba" font-size="16" font-weight="700" text-anchor="start">4</text>
+<text x="1290.0" y="220" fill="#f1f5f3" font-size="21" font-weight="700" text-anchor="middle">Configure HIL</text>
+<text x="1290.0" y="250" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Prepare → activation → CSV</text>
+<text x="1290.0" y="273" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Three-minute preparation limit</text>
+<path d="M1290 295V327H210V360" fill="none" stroke="#3accba" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="750" y="319" fill="#adc1ba" font-size="14" font-weight="400" text-anchor="middle">Continue after successful HIL preparation and CSV writes</text>
+<rect x="60" y="360" width="300" height="110" rx="12" fill="#173c34" stroke="#3accba" stroke-width="1.5"/>
+<text x="78" y="388" fill="#3accba" font-size="16" font-weight="700" text-anchor="start">5</text>
+<text x="210.0" y="395" fill="#f1f5f3" font-size="21" font-weight="700" text-anchor="middle">Upload</text>
+<text x="210.0" y="425" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Store firmware, then</text>
+<text x="210.0" y="448" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">explicitly flash it</text>
+<path d="M360 415H412" fill="none" stroke="#3accba" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="420" y="360" width="300" height="110" rx="12" fill="#173c34" stroke="#3accba" stroke-width="1.5"/>
+<text x="438" y="388" fill="#3accba" font-size="16" font-weight="700" text-anchor="start">6</text>
+<text x="570.0" y="395" fill="#f1f5f3" font-size="21" font-weight="700" text-anchor="middle">Test</text>
+<text x="570.0" y="425" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Run .github/user/jobs/</text>
+<text x="570.0" y="448" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Wait for job results</text>
+<path d="M720 415H772" fill="none" stroke="#3accba" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="780" y="360" width="300" height="110" rx="12" fill="#173c34" stroke="#3accba" stroke-width="1.5"/>
+<text x="798" y="388" fill="#3accba" font-size="16" font-weight="700" text-anchor="start">7</text>
+<text x="930.0" y="395" fill="#f1f5f3" font-size="21" font-weight="700" text-anchor="middle">Collect</text>
+<text x="930.0" y="425" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Publish test artifacts</text>
+<text x="930.0" y="448" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">when Test has run</text>
+<path d="M1080 415H1132" fill="none" stroke="#3accba" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="1140" y="360" width="300" height="110" rx="12" fill="#173c34" stroke="#3accba" stroke-width="1.5"/>
+<text x="1158" y="388" fill="#3accba" font-size="16" font-weight="700" text-anchor="start">8</text>
+<text x="1290.0" y="395" fill="#f1f5f3" font-size="21" font-weight="700" text-anchor="middle">Release</text>
+<text x="1290.0" y="425" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Cancel the booking</text>
+<text x="1290.0" y="448" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="middle">Retain failure cleanup</text>
+<text x="60" y="552" fill="#e6c279" font-size="17" font-weight="400" text-anchor="start">Setup or upload failure prevents Test. Release follows the existing cleanup conditions.</text>
+<rect x="60" y="580" width="670" height="205" rx="12" fill="#202020" stroke="#3accba" stroke-width="1.5"/>
+<text x="82" y="612" fill="#3accba" font-size="20" font-weight="700" text-anchor="start">CONFIGURE HIL</text>
+<text x="82" y="645" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">Read HIL_SENSOR_NAME and the frontend-format CSV.</text>
+<text x="82" y="672" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">Select one sensor; prepare and activate the approved image.</text>
+<text x="82" y="699" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">Wait for preparation success: maximum 180 seconds.</text>
+<text x="82" y="726" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">Send physical CSV values in batches with verified readback.</text>
+<text x="82" y="753" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">Blank HIL_SENSOR_NAME skips this setup.</text>
+<rect x="770" y="580" width="670" height="205" rx="12" fill="#202020" stroke="#6d9dc4" stroke-width="1.5"/>
+<text x="792" y="612" fill="#a9caed" font-size="19" font-weight="700" text-anchor="start">UPLOAD — TWO EXPLICIT API OPERATIONS</text>
+<text x="792" y="645" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">1. POST /upload → store the MCU firmware only.</text>
+<text x="792" y="672" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">2. Check the stored filename, then request its flash:</text>
+<text x="792" y="699" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">   POST /v1/artifacts/my-uploads?code=…</text>
+<text x="792" y="726" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">Require success before starting CI jobs.</text>
+<text x="792" y="753" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">Upload success alone does not mean flash success.</text>
+<text x="60" y="826" fill="#adc1ba" font-size="16" font-weight="400" text-anchor="start">Inputs: ECW_API_KEY · BOARD_NAME · ECW_BACKEND_URL · optional HIL_SENSOR_NAME / HIL_CSV_FILE</text>
+<text x="60" y="854" fill="#adc1ba" font-size="15" font-weight="400" text-anchor="start">HIL values come from .github/user/hil/. The runner uses existing ECW APIs; no new backend route is required.</text>
+</svg>
