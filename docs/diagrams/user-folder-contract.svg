@@ -1,0 +1,54 @@
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="The workflow and its scripts are generic and never edited; at the Build and Test steps they reach into .github/user/build/build.sh and .github/user/jobs/*.json, which are project-owned and safe to edit freely.">
+  <defs>
+    <marker id="uarrow" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto">
+      <polygon points="0,0 8,4.5 0,9" fill="#3accba"></polygon>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="420" fill="#101010"></rect>
+
+  <!-- panel headers -->
+  <text x="40" y="38" font-family="ui-sans-serif, Segoe UI, Arial" font-size="16" font-weight="700" fill="#d11b1b">Generic -- never edit</text>
+  <text x="500" y="38" font-family="ui-sans-serif, Segoe UI, Arial" font-size="16" font-weight="700" fill="#00e92f">Yours -- edit freely</text>
+
+  <!-- divider -->
+  <line x1="450" y1="20" x2="450" y2="400" stroke="#404040" stroke-width="1"></line>
+
+  <g font-family="ui-sans-serif, Segoe UI, Arial">
+    <!-- left: workflow -->
+    <rect x="40" y="70" width="360" height="70" rx="10" fill="#19202b" stroke="#76787a" stroke-width="1.2"></rect>
+    <text x="220" y="98" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">.github/workflows/ci-job-smoke.yml</text>
+    <text x="220" y="118" text-anchor="middle" font-size="11" fill="#8fa6a1">Build job, Test job, ...</text>
+
+    <!-- left: scripts -->
+    <rect x="40" y="180" width="360" height="70" rx="10" fill="#19202b" stroke="#76787a" stroke-width="1.2"></rect>
+    <text x="220" y="208" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">.github/scripts/*.py</text>
+    <text x="220" y="228" text-anchor="middle" font-size="11" fill="#8fa6a1">create_jobs.py and friends</text>
+
+    <!-- right: build.sh -->
+    <rect x="500" y="70" width="360" height="70" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"></rect>
+    <text x="680" y="98" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">.github/user/build/build.sh</text>
+    <text x="680" y="118" text-anchor="middle" font-size="11" fill="#cfeeea">your build process, any toolchain</text>
+
+    <!-- right: jobs -->
+    <rect x="500" y="180" width="360" height="70" rx="10" fill="#17685f" stroke="#3accba" stroke-width="1.4"></rect>
+    <text x="680" y="208" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">.github/user/jobs/*.json</text>
+    <text x="680" y="228" text-anchor="middle" font-size="11" fill="#cfeeea">your CI jobs, any board</text>
+  </g>
+
+  <!-- crossing arrows -->
+  <g stroke="#3accba" stroke-width="2" fill="none">
+    <path d="M 400 105 L 496 105" marker-end="url(#uarrow)"></path>
+    <path d="M 400 215 L 496 215" marker-end="url(#uarrow)"></path>
+  </g>
+  <text x="448" y="98" text-anchor="middle" font-family="ui-sans-serif, Segoe UI, Arial" font-size="11" fill="#8fa6a1">runs</text>
+  <text x="448" y="208" text-anchor="middle" font-family="ui-sans-serif, Segoe UI, Arial" font-size="11" fill="#8fa6a1">reads</text>
+
+  <!-- footer note -->
+  <rect x="40" y="300" width="820" height="90" rx="10" fill="#202020" stroke="#404040"></rect>
+  <text x="60" y="326" font-family="ui-sans-serif, Segoe UI, Arial" font-size="12.5" fill="#ffffff" font-weight="700">Changing your board, your toolchain, or your CI jobs</text>
+  <text x="60" y="348" font-family="ui-sans-serif, Segoe UI, Arial" font-size="12" fill="#b9c3c1">never means touching the left column -- only add, remove, or edit</text>
+  <text x="60" y="368" font-family="ui-sans-serif, Segoe UI, Arial" font-size="12" fill="#b9c3c1">files in the right column. See docs/06-support-and-liability.md for what</text>
+  <text x="60" y="386" font-family="ui-sans-serif, Segoe UI, Arial" font-size="12" fill="#b9c3c1">happens if you edit the left column anyway.</text>
+</svg>

@@ -1,0 +1,125 @@
+name: ECW CI Trigger - Stage 1 (Build & Reserve)
+
+# Event-driven alternative to ci-job-smoke.yml, 1 of 2 -- see
+# docs/07-trigger-mode.md before enabling this.
+#
+# Instead of a runner sitting in a "Wait" job polling ECW until the booking
+# becomes active (what ci-job-smoke.yml does), this run builds, reserves,
+# registers a session-activation trigger with ECW, and STOPS. Minutes/cost
+# stop accruing the moment this workflow ends. When ECW activates the
+# session it fires "Stage 2" (ci-job-trigger-stage2.yml) itself via the
+# workflow_dispatch REST API, passing the booking context as inputs.
+#
+# Use this pipeline OR ci-job-smoke.yml, not both, against the same booking.
+
+on:
+  workflow_dispatch:
+    inputs:
+      active_ref:
+        description: >-
+          Git ref Stage 2 should check out and run on. Defaults to the ref
+          that started this run.
+        required: false
+        default: ""
+
+env:
+  ECW_BACKEND_URL: ${{ vars.ECW_BACKEND_URL || 'https://api-dev.edgebench.io' }}
+  # No fallback on purpose, same as ci-job-smoke.yml -- see that file's
+  # comment on BOARD_NAME.
+  BOARD_NAME: ${{ vars.BOARD_NAME }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run project build script
+        run: |
+          set -euo pipefail
+
+          if [ ! -x .github/user/build/build.sh ]; then
+            echo "Missing or non-executable .github/user/build/build.sh -- see .github/user/README.md."
+            exit 1
+          fi
+
+          .github/user/build/build.sh
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecw-firmware-${{ github.run_id }}
+          path: build/
+
+  reserve:
+    name: Reserve & register trigger
+    runs-on: ubuntu-latest
+    needs: build
+    outputs:
+      booking_id: ${{ steps.booking.outputs.booking_id }}
+      board_name: ${{ steps.board.outputs.board_name }}
+
+    env:
+      ECW_API_KEY: ${{ secrets.ECW_API_KEY }}
+      ECW_DISPATCH_PAT: ${{ secrets.ECW_DISPATCH_PAT }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check required secrets
+        run: |
+          set -euo pipefail
+
+          if [ -z "${ECW_API_KEY}" ]; then
+            echo "Missing ECW_API_KEY repository secret."
+            exit 1
+          fi
+          if [ -z "${ECW_DISPATCH_PAT}" ]; then
+            echo "Missing ECW_DISPATCH_PAT repository secret (fine-grained PAT, Actions: Read and write) -- see docs/07-trigger-mode.md."
+            exit 1
+          fi
+
+      - name: Check required variables
+        run: |
+          set -euo pipefail
+
+          if [ -z "${BOARD_NAME}" ]; then
+            echo "Missing BOARD_NAME repository variable (Settings > Actions > Variables)."
+            exit 1
+          fi
+
+      - name: Check backend health
+        run: |
+          set -euo pipefail
+
+          curl --fail --silent --show-error \
+            "${ECW_BACKEND_URL%/}/docs" \
+            --output /dev/null
+
+      - name: Select board type
+        id: board
+        run: python3 .github/scripts/select_board.py
+
+      - name: Find or create booking
+        id: booking
+        env:
+          ECW_BOARD_NAME: ${{ steps.board.outputs.board_name }}
+        run: python3 .github/scripts/find_or_create_booking.py
+
+      - name: Register session-activation trigger
+        env:
+          ECW_BOOKING_ID: ${{ steps.booking.outputs.booking_id }}
+          ECW_ACTIVE_WORKFLOW: ci-job-trigger-stage2.yml
+          ECW_ACTIVE_REF: ${{ inputs.active_ref }}
+        run: python3 .github/scripts/register_activation_trigger.py
+
+      - name: Upload reserve artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecw-ci-trigger-reserve-${{ github.run_id }}
+          path: artifacts/
+          if-no-files-found: warn
